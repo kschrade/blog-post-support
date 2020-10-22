@@ -1,5 +1,5 @@
 {
-  "name": "local-cache",
+  "name": "no-cache",
   "version": "1.0.0",
   "description": "apollo federations with no cache",
   "main": "index.js",
@@ -19,6 +19,7 @@
     "start": "concurrently \"yarn:start:*\"",
     "start:be": "nodemon ./be-service.js",
     "start:gateway": "sleep 3 && nodemon ./gateway.js",
+    "start:inventory": "nodemon ./inventory-fed.js",
     "start:products": "nodemon ./products-fed.js"
   }
 }
