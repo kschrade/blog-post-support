@@ -4,8 +4,10 @@ const memoization = (innerFn, getKeyFn, cache) => async (...args) => {
   try {
     const cacheVal = await cache.get(key);
     if (cacheVal) {
+      console.log('Cache Hit!');
       return cacheVal;
     }
+    console.log('Cache Miss!');
   } catch (e) {
     console.log(e);
   }
@@ -21,4 +23,4 @@ const memoization = (innerFn, getKeyFn, cache) => async (...args) => {
   return res;
 };
 
-modules.exports = { memoization };
+exports.memoization = memoization;
