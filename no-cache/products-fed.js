@@ -1,5 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server');
 const { buildFederatedSchema } = require('@apollo/federation');
+const axios = require('axios');
 
 const typeDefs = gql`
   extend type Query {
@@ -21,7 +22,9 @@ const resolvers = {
   },
   Query: {
     topProducts(_, args) {
-      return products.slice(0, args.first);
+      return axios
+        .get('http://localhost:4002/')
+        .then((res) => res.data.slice(0, args.first));
     },
   },
 };
@@ -41,24 +44,3 @@ const server = new ApolloServer({
 server.listen({ port: 4001 }).then(({ url }) => {
   console.log(`🚀 Server ready at ${url}`);
 });
-
-const products = [
-  {
-    upc: '1',
-    name: 'Table',
-    price: 899,
-    weight: 100,
-  },
-  {
-    upc: '2',
-    name: 'Couch',
-    price: 1299,
-    weight: 1000,
-  },
-  {
-    upc: '3',
-    name: 'Chair',
-    price: 54,
-    weight: 50,
-  },
-];
