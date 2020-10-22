@@ -1,5 +1,5 @@
-const { ApolloServer, gql } = require("apollo-server");
-const { buildFederatedSchema } = require("@apollo/federation");
+const { ApolloServer, gql } = require('apollo-server');
+const { buildFederatedSchema } = require('@apollo/federation');
 
 const typeDefs = gql`
   extend type Query {
@@ -28,7 +28,7 @@ const resolvers = {
 
 const server = new ApolloServer({
   context: () => {
-    console.log("request hit product federations.");
+    console.log('request hit product federations.');
   },
   schema: buildFederatedSchema([
     {
@@ -44,20 +44,20 @@ server.listen({ port: 4001 }).then(({ url }) => {
 
 const products = [
   {
-    upc: "1",
-    name: "Table",
+    upc: '1',
+    name: 'Table',
     price: 899,
     weight: 100,
   },
   {
-    upc: "2",
-    name: "Couch",
+    upc: '2',
+    name: 'Couch',
     price: 1299,
     weight: 1000,
   },
   {
-    upc: "3",
-    name: "Chair",
+    upc: '3',
+    name: 'Chair',
     price: 54,
     weight: 50,
   },

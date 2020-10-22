@@ -22,7 +22,7 @@ const memoization = (innerFn, getKeyFn, cache) => async (...args) => {
 };
 
 const fun = (name) => {
-  console.log("internal");
+  console.log('internal');
   return `hello ${name}`;
 };
 
@@ -32,7 +32,7 @@ const test = async () => {
   const lotsOfFun = memoization(
     fun,
     (key) => {
-      console.log("get key:", key);
+      console.log('get key:', key);
       return key;
     },
     {
@@ -41,10 +41,10 @@ const test = async () => {
     }
   );
 
-  const result1 = await lotsOfFun("kyle");
-  const result2 = await lotsOfFun("kyle");
-  const result3 = await lotsOfFun("kylee");
-  console.log("end results:", [result1, result2, result3].join(", "));
+  const result1 = await lotsOfFun('kyle');
+  const result2 = await lotsOfFun('kyle');
+  const result3 = await lotsOfFun('kylee');
+  console.log('end results:', [result1, result2, result3].join(', '));
 };
 
 test();

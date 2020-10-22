@@ -1,5 +1,5 @@
-const { ApolloServer } = require("apollo-server");
-const { ApolloGateway } = require("@apollo/gateway");
+const { ApolloServer } = require('apollo-server');
+const { ApolloGateway } = require('@apollo/gateway');
 
 const gateway = new ApolloGateway({
   // This entire `serviceList` is optional when running in managed federation
@@ -7,7 +7,7 @@ const gateway = new ApolloGateway({
   // using a single source of truth to compose a schema is recommended and
   // prevents composition failures at runtime using schema validation using
   // real usage-based metrics.
-  serviceList: [{ name: "products", url: "http://localhost:4001/graphql" }],
+  serviceList: [{ name: 'products', url: 'http://localhost:4001/graphql' }],
 
   // Experimental: Enabling this enables the query plan view in Playground.
   __exposeQueryPlanExperimental: false,
@@ -16,7 +16,7 @@ const gateway = new ApolloGateway({
 (async () => {
   const server = new ApolloServer({
     context: () => {
-      console.log("request hit gateway.");
+      console.log('request hit gateway.');
     },
     gateway,
 
