@@ -1,9 +1,14 @@
-const { ApolloServer, gql } = require('apollo-server');
-const { buildFederatedSchema } = require('@apollo/federation');
-const axios = require('axios');
-const NodeCache = require('node-cache');
+const {
+  ApolloServer,
+  gql,
+} = require('../distibuted-cache/node_modules/apollo-server');
+const {
+  buildFederatedSchema,
+} = require('../distibuted-cache/node_modules/@apollo/federation');
+const axios = require('../distibuted-cache/node_modules/axios');
+const NodeCache = require('../distibuted-cache/node_modules/node-cache');
 
-const { memoization } = require('../caching-and-federations');
+const { memoization } = require('../index');
 
 const cache = new NodeCache();
 

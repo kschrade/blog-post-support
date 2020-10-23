@@ -3,9 +3,10 @@ const { buildFederatedSchema } = require('@apollo/federation');
 const axios = require('axios');
 const NodeCache = require('node-cache');
 
-const { memoization } = require('../caching-and-federations');
+const { memoization } = require('../index');
 
-const cache = new NodeCache();
+const outerCache = new NodeCache({ stdTTL: 2, checkperiod: 1 });
+const innerCache = new NodeCache({ stdTTL: 15, checkperiod: 2 });
 
 const typeDefs = gql`
   extend type Query {
@@ -26,10 +27,22 @@ const getProducts = (numberOfProducts) => {
     .then((res) => res.data.slice(0, numberOfProducts));
 };
 
-const memoizedFunc = memoization(
-  getProducts /* inner function */,
+const innerMemoFunc = memoization(
+  (numberOfProducts) => {
+    console.log('inner cache function missed');
+    return getProducts(numberOfProducts);
+  } /* inner function */,
   (numberOfProducts) => numberOfProducts.toString() /* cache key function */,
-  cache
+  innerCache
+);
+
+const outerMemoFunc = memoization(
+  (numberOfProducts) => {
+    console.log('outer cache function missed');
+    return innerMemoFunc(numberOfProducts);
+  } /* inner function */,
+  (numberOfProducts) => numberOfProducts.toString() /* cache key function */,
+  outerCache
 );
 
 const resolvers = {
@@ -40,7 +53,7 @@ const resolvers = {
   },
   Query: {
     topProducts(_, args) {
-      return memoizedFunc(args.first);
+      return outerMemoFunc(args.first);
     },
   },
 };

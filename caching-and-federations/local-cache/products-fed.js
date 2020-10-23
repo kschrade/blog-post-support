@@ -3,7 +3,7 @@ const { buildFederatedSchema } = require('@apollo/federation');
 const axios = require('axios');
 const NodeCache = require('node-cache');
 
-const { memoization } = require('../caching-and-federations');
+const { memoization } = require('../index');
 
 const cache = new NodeCache();
 
@@ -20,10 +20,10 @@ const typeDefs = gql`
 `;
 
 const getProducts = (numberOfProducts) => {
-  console.log('running internal function for Products federation');
+  console.log('running internal function');
   return axios
-    .get('http://localhost:4002/v2')
-    .then((res) => res.data.products.slice(0, numberOfProducts));
+    .get('http://localhost:4002/')
+    .then((res) => res.data.slice(0, numberOfProducts));
 };
 
 const memoizedFunc = memoization(
