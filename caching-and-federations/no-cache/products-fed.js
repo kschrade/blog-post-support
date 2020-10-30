@@ -2,6 +2,7 @@ const { ApolloServer, gql } = require('apollo-server');
 const { buildFederatedSchema } = require('@apollo/federation');
 const axios = require('axios');
 
+// schema
 const typeDefs = gql`
   extend type Query {
     topProducts(first: Int = 5): [Product]
@@ -14,6 +15,7 @@ const typeDefs = gql`
   }
 `;
 
+// resolvers
 const resolvers = {
   Product: {
     __resolveReference(object) {
@@ -29,6 +31,7 @@ const resolvers = {
   },
 };
 
+// creates server
 const server = new ApolloServer({
   context: () => {
     console.log('request hit product federations.');

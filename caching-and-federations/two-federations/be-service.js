@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const port = 4002;
 
+/**
+ * Very basic express server that feed the implementing federations.
+ */
 const products = [
   {
     upc: '1',

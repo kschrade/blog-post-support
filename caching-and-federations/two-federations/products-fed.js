@@ -10,8 +10,10 @@ const NodeCache = require('../distibuted-cache/node_modules/node-cache');
 
 const { memoization } = require('../index');
 
+// cache
 const cache = new NodeCache();
 
+// schema
 const typeDefs = gql`
   extend type Query {
     topProducts(first: Int = 5): [Product]
@@ -24,6 +26,7 @@ const typeDefs = gql`
   }
 `;
 
+// api function to memoize
 const getProducts = (numberOfProducts) => {
   console.log('running internal function for Products federation');
   return axios
@@ -31,12 +34,14 @@ const getProducts = (numberOfProducts) => {
     .then((res) => res.data.products.slice(0, numberOfProducts));
 };
 
+// Memoizing function above
 const memoizedFunc = memoization(
   getProducts /* inner function */,
   (numberOfProducts) => numberOfProducts.toString() /* cache key function */,
   cache
 );
 
+// resolvers
 const resolvers = {
   Product: {
     __resolveReference(object) {
@@ -50,6 +55,7 @@ const resolvers = {
   },
 };
 
+// create server
 const server = new ApolloServer({
   context: () => {
     console.log('request hit product federations.');
